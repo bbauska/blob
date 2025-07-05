@@ -1,4 +1,7 @@
-<!-- three/addons/controls/OrbitControls.js -->
+/**
+  originally from: three/addons/controls/OrbitControls.js
+  currently: bbauska/blob/js/OribtControls.js
+*/
 import {
 	EventDispatcher,
 	MOUSE,
@@ -115,130 +118,77 @@ class OrbitControls extends EventDispatcher {
 		//
 
 		this.getPolarAngle = function () {
-
 			return spherical.phi;
-
 		};
-
 		this.getAzimuthalAngle = function () {
-
 			return spherical.theta;
-
 		};
-
 		this.getDistance = function () {
-
 			return this.object.position.distanceTo( this.target );
-
 		};
-
 		this.listenToKeyEvents = function ( domElement ) {
-
 			domElement.addEventListener( 'keydown', onKeyDown );
 			this._domElementKeyEvents = domElement;
-
 		};
-
 		this.stopListenToKeyEvents = function () {
-
 			this._domElementKeyEvents.removeEventListener( 'keydown', onKeyDown );
 			this._domElementKeyEvents = null;
-
 		};
-
 		this.saveState = function () {
-
 			scope.target0.copy( scope.target );
 			scope.position0.copy( scope.object.position );
 			scope.zoom0 = scope.object.zoom;
-
 		};
-
 		this.reset = function () {
-
 			scope.target.copy( scope.target0 );
 			scope.object.position.copy( scope.position0 );
 			scope.object.zoom = scope.zoom0;
-
 			scope.object.updateProjectionMatrix();
 			scope.dispatchEvent( _changeEvent );
-
 			scope.update();
-
 			state = STATE.NONE;
-
 		};
-
 		// this method is exposed, but perhaps it would be better if we can make it private...
 		this.update = function () {
-
 			const offset = new Vector3();
-
 			// so camera.up is the orbit axis
 			const quat = new Quaternion().setFromUnitVectors( object.up, new Vector3( 0, 1, 0 ) );
 			const quatInverse = quat.clone().invert();
-
 			const lastPosition = new Vector3();
 			const lastQuaternion = new Quaternion();
 			const lastTargetPosition = new Vector3();
-
 			const twoPI = 2 * Math.PI;
-
 			return function update( deltaTime = null ) {
-
 				const position = scope.object.position;
-
 				offset.copy( position ).sub( scope.target );
-
 				// rotate offset to "y-axis-is-up" space
 				offset.applyQuaternion( quat );
-
 				// angle from z-axis around y-axis
 				spherical.setFromVector3( offset );
-
 				if ( scope.autoRotate && state === STATE.NONE ) {
-
 					rotateLeft( getAutoRotationAngle( deltaTime ) );
-
 				}
-
 				if ( scope.enableDamping ) {
-
 					spherical.theta += sphericalDelta.theta * scope.dampingFactor;
 					spherical.phi += sphericalDelta.phi * scope.dampingFactor;
-
 				} else {
-
 					spherical.theta += sphericalDelta.theta;
 					spherical.phi += sphericalDelta.phi;
-
 				}
-
 				// restrict theta to be between desired limits
-
 				let min = scope.minAzimuthAngle;
 				let max = scope.maxAzimuthAngle;
-
 				if ( isFinite( min ) && isFinite( max ) ) {
-
 					if ( min < - Math.PI ) min += twoPI; else if ( min > Math.PI ) min -= twoPI;
-
 					if ( max < - Math.PI ) max += twoPI; else if ( max > Math.PI ) max -= twoPI;
-
 					if ( min <= max ) {
-
 						spherical.theta = Math.max( min, Math.min( max, spherical.theta ) );
-
 					} else {
-
 						spherical.theta = ( spherical.theta > ( min + max ) / 2 ) ?
 							Math.max( min, spherical.theta ) :
 							Math.min( max, spherical.theta );
-
 					}
-
 				}
-
 				// restrict phi to be between desired limits
 				spherical.phi = Math.max( scope.minPolarAngle, Math.min( scope.maxPolarAngle, spherical.phi ) );
 
