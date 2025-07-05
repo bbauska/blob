@@ -1,7 +1,9 @@
 <!-- /js/blob.js -->
 import * as THREE from 'three';
 import { createNoise2D } from "https://esm.sh/simplex-noise";
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { OrbitControls } from '/js/OrbitControls.js';
+
+<!-- import { OrbitControls } from 'three/addons/controls/OrbitControls.js';  -->
 
 let theta,
   phi,
