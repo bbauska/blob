@@ -1,9 +1,9 @@
-<!-- /js/blob.js -->
+/** /js/blob.js */
 import * as THREE from 'three';
 import { createNoise2D } from "https://esm.sh/simplex-noise";
 import { OrbitControls } from '/js/OrbitControls.js';
 
-<!-- import { OrbitControls } from 'three/addons/controls/OrbitControls.js';  -->
+/** import { OrbitControls } from 'three/addons/controls/OrbitControls.js';  */
 
 let theta,
   phi,
@@ -85,7 +85,7 @@ class Effect {
     this.textures = {};
   }
 
-  //MARK: -init
+  // MARK: -init
   async init() {
     this.threeInit();
     this.texturePromise = this.textureLoader();
@@ -130,7 +130,7 @@ class Effect {
     });
   }
 
-  //MARK: -threeInit
+  // MARK: -threeInit
   // Sets up the core Three.js components: renderer, scene, camera, lighting, controls
   threeInit() {
     const container = document.querySelector(".webgl");
@@ -174,7 +174,7 @@ class Effect {
     this.controls.enablePan = false;
   }
 
-  //MARK: -textureLoader
+  // MARK: -textureLoader
   // Loads all textures asynchronously
   textureLoader() {
     const textureLoader = new THREE.TextureLoader();
@@ -209,7 +209,7 @@ class Effect {
     );
   }
 
-  //MARK: -createElements
+  // MARK: -createElements
   // Builds the main nucleus and background spheres
   createElements() {
     /* Nucleus  */
@@ -241,7 +241,7 @@ class Effect {
     this.scene.add(this.sphereBg);
   }
 
-  //MARK: -createPointElement
+  // MARK: -createPointElement
   // Generates various point-based particles (stars, comets, planets)
   createPointElement() {
     const self = this;
@@ -356,7 +356,7 @@ class Effect {
     }
   }
 
-  //MARK: -createMovingStars
+  // MARK: -createMovingStars
   // Builds a set of stars that move from the outer boundary of the scene toward the center
   createMovingStars() {
     const totalStars = 5;
@@ -409,7 +409,7 @@ class Effect {
     this.scene.add(this.stars);
   }
 
-  //MARK: -randomPointSphere
+  // MARK: -randomPointSphere
   // Generates random coordinates on a sphere using the provided radius
   randomPointSphere(radius) {
     theta = 2 * Math.PI * Math.random();
@@ -429,7 +429,7 @@ class Effect {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
-  //MARK: -limitFPS
+  // MARK: -limitFPS
   // Caps the rendering loop to a specified frame interval
   limitFPS(interval) {
     this.rafAnimate = requestAnimationFrame(this.limitFPS.bind(this, interval));
